@@ -1,0 +1,253 @@
+auths:
+  apc_public:
+    community: public
+    version: 2
+  apc_public2:
+    community: public2
+    version: 2
+
+modules:
+  apc_rpdu2_nmc2:
+    walk:
+      - 1.3.6.1.4.1.318.1.1.26.4.3    # rPDU2DeviceStatusTable
+      - 1.3.6.1.4.1.318.1.1.26.6.3    # rPDU2PhaseStatusTable
+      - 1.3.6.1.4.1.318.1.1.26.8.3    # rPDU2OutletMeteredStatusTable
+    metrics:
+      # --- Device-level metrics ---
+      - name: apc_pdu_name
+        oid: 1.3.6.1.4.1.318.1.1.26.4.3.1.3
+        type: DisplayString
+        help: PDU device name
+        indexes:
+          - labelname: device_index
+            type: Integer
+
+      - name: apc_pdu_power_hundredths_kw
+        oid: 1.3.6.1.4.1.318.1.1.26.4.3.1.5
+        type: gauge
+        help: Total PDU power in hundredths of kW
+        indexes:
+          - labelname: device_index
+            type: Integer
+        lookups:
+          - labels: [device_index]
+            labelname: pdu
+            oid: 1.3.6.1.4.1.318.1.1.26.4.3.1.3
+            type: DisplayString
+
+      - name: apc_pdu_energy_tenths_kwh
+        oid: 1.3.6.1.4.1.318.1.1.26.4.3.1.6
+        type: gauge
+        help: Total PDU energy in tenths of kWh
+        indexes:
+          - labelname: device_index
+            type: Integer
+        lookups:
+          - labels: [device_index]
+            labelname: pdu
+            oid: 1.3.6.1.4.1.318.1.1.26.4.3.1.3
+            type: DisplayString
+
+      - name: apc_pdu_power_max_hundredths_kw
+        oid: 1.3.6.1.4.1.318.1.1.26.4.3.1.16
+        type: gauge
+        help: Peak PDU power in hundredths of kW
+        indexes:
+          - labelname: device_index
+            type: Integer
+        lookups:
+          - labels: [device_index]
+            labelname: pdu
+            oid: 1.3.6.1.4.1.318.1.1.26.4.3.1.3
+            type: DisplayString
+
+      - name: apc_pdu_power_percent
+        oid: 1.3.6.1.4.1.318.1.1.26.4.3.1.17
+        type: gauge
+        help: PDU power as percentage of rated capacity
+        indexes:
+          - labelname: device_index
+            type: Integer
+        lookups:
+          - labels: [device_index]
+            labelname: pdu
+            oid: 1.3.6.1.4.1.318.1.1.26.4.3.1.3
+            type: DisplayString
+
+      # --- Phase-level metrics ---
+      - name: apc_phase_module
+        oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.2
+        type: gauge
+        help: Device module index this phase belongs to
+        indexes:
+          - labelname: phase_index
+            type: Integer
+        lookups:
+          - labels: [phase_index]
+            labelname: phase_number
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.3
+            type: Integer
+
+      - name: apc_phase_current_tenths_amp
+        oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.5
+        type: gauge
+        help: Phase current in tenths of amps
+        indexes:
+          - labelname: phase_index
+            type: Integer
+        lookups:
+          - labels: [phase_index]
+            labelname: device_index
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.2
+            type: Integer
+          - labels: [phase_index]
+            labelname: phase_number
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.3
+            type: Integer
+
+      - name: apc_phase_voltage
+        oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.6
+        type: gauge
+        help: Phase voltage in volts
+        indexes:
+          - labelname: phase_index
+            type: Integer
+        lookups:
+          - labels: [phase_index]
+            labelname: device_index
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.2
+            type: Integer
+          - labels: [phase_index]
+            labelname: phase_number
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.3
+            type: Integer
+
+      - name: apc_phase_power_hundredths_kw
+        oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.7
+        type: gauge
+        help: Phase power in hundredths of kW
+        indexes:
+          - labelname: phase_index
+            type: Integer
+        lookups:
+          - labels: [phase_index]
+            labelname: device_index
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.2
+            type: Integer
+          - labels: [phase_index]
+            labelname: phase_number
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.3
+            type: Integer
+
+      - name: apc_phase_apparent_power_hundredths_kva
+        oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.8
+        type: gauge
+        help: Phase apparent power in hundredths of kVA
+        indexes:
+          - labelname: phase_index
+            type: Integer
+        lookups:
+          - labels: [phase_index]
+            labelname: device_index
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.2
+            type: Integer
+          - labels: [phase_index]
+            labelname: phase_number
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.3
+            type: Integer
+
+      - name: apc_phase_power_factor_percent
+        oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.9
+        type: gauge
+        help: Phase power factor as percentage
+        indexes:
+          - labelname: phase_index
+            type: Integer
+        lookups:
+          - labels: [phase_index]
+            labelname: device_index
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.2
+            type: Integer
+          - labels: [phase_index]
+            labelname: phase_number
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.3
+            type: Integer
+
+      - name: apc_phase_current_max_tenths_amp
+        oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.10
+        type: gauge
+        help: Phase peak current in tenths of amps
+        indexes:
+          - labelname: phase_index
+            type: Integer
+        lookups:
+          - labels: [phase_index]
+            labelname: device_index
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.2
+            type: Integer
+          - labels: [phase_index]
+            labelname: phase_number
+            oid: 1.3.6.1.4.1.318.1.1.26.6.3.1.3
+            type: Integer
+
+      # --- Bank/outlet metered metrics ---
+      - name: apc_bank_module
+        oid: 1.3.6.1.4.1.318.1.1.26.8.3.1.2
+        type: gauge
+        help: Device module index this bank belongs to
+        indexes:
+          - labelname: bank_index
+            type: Integer
+        lookups:
+          - labels: [bank_index]
+            labelname: bank_number
+            oid: 1.3.6.1.4.1.318.1.1.26.8.3.1.3
+            type: Integer
+
+      - name: apc_bank_current_tenths_amp
+        oid: 1.3.6.1.4.1.318.1.1.26.8.3.1.5
+        type: gauge
+        help: Bank current in tenths of amps
+        indexes:
+          - labelname: bank_index
+            type: Integer
+        lookups:
+          - labels: [bank_index]
+            labelname: device_index
+            oid: 1.3.6.1.4.1.318.1.1.26.8.3.1.2
+            type: Integer
+          - labels: [bank_index]
+            labelname: bank_number
+            oid: 1.3.6.1.4.1.318.1.1.26.8.3.1.3
+            type: Integer
+
+      - name: apc_bank_current_max_tenths_amp
+        oid: 1.3.6.1.4.1.318.1.1.26.8.3.1.6
+        type: gauge
+        help: Bank peak current in tenths of amps
+        indexes:
+          - labelname: bank_index
+            type: Integer
+        lookups:
+          - labels: [bank_index]
+            labelname: device_index
+            oid: 1.3.6.1.4.1.318.1.1.26.8.3.1.2
+            type: Integer
+          - labels: [bank_index]
+            labelname: bank_number
+            oid: 1.3.6.1.4.1.318.1.1.26.8.3.1.3
+            type: Integer
+
+  apc_rpdu_nmc1:
+    walk:
+      - 1.3.6.1.4.1.318.1.1.12.1
+      - 1.3.6.1.4.1.318.1.1.12.2.3
+      - 1.3.6.1.4.1.318.1.1.12.1.16.0
+    metrics:
+      - name: apc_rpdu_power_watts
+        oid: 1.3.6.1.4.1.318.1.1.12.1.16
+        type: gauge
+        help: Total PDU power in watts
+        indexes:
+          - labelname: device_index
+            type: Integer

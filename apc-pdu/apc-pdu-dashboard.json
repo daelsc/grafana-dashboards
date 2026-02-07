@@ -1,0 +1,538 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "Prometheus datasource with APC PDU SNMP metrics",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    }
+  ],
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 13.8
+              },
+              {
+                "color": "red",
+                "value": 17.3
+              }
+            ]
+          },
+          "unit": "kwatt"
+        }
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "targets": [
+        {
+          "expr": "apc_pdu_power_hundredths_kw{instance='10.1.115.241', pdu=~'$pdu'} / 100",
+          "legendFormat": "{{pdu}}"
+        }
+      ],
+      "title": "Total Power",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        }
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "targets": [
+        {
+          "expr": "apc_pdu_power_percent{instance='10.1.115.241', pdu=~'$pdu'}",
+          "legendFormat": "{{pdu}}"
+        }
+      ],
+      "title": "Load (%)",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "unit": "kwatth"
+        }
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "targets": [
+        {
+          "expr": "apc_pdu_energy_tenths_kwh{instance='10.1.115.241', pdu=~'$pdu'} / 10",
+          "legendFormat": "{{pdu}}"
+        }
+      ],
+      "title": "Energy Consumed",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 13.8
+              },
+              {
+                "color": "red",
+                "value": 17.3
+              }
+            ]
+          },
+          "unit": "kwatt"
+        }
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "targets": [
+        {
+          "expr": "apc_pdu_power_max_hundredths_kw{instance='10.1.115.241', pdu=~'$pdu'} / 100",
+          "legendFormat": "{{pdu}}"
+        }
+      ],
+      "title": "Peak Power",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 15,
+            "gradientMode": "scheme",
+            "lineWidth": 2
+          },
+          "decimals": 2,
+          "unit": "kwatt"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 5,
+      "targets": [
+        {
+          "expr": "apc_pdu_power_hundredths_kw{instance='10.1.115.241', pdu=~'$pdu'} / 100",
+          "legendFormat": "{{pdu}}"
+        }
+      ],
+      "title": "Total Power Over Time",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "barAlignment": 0,
+            "barMaxWidth": 40,
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "gradientMode": "hue",
+            "lineWidth": 0
+          },
+          "decimals": 1,
+          "unit": "kwatth"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 13,
+      "targets": [
+        {
+          "expr": "delta(apc_pdu_energy_tenths_kwh{instance='10.1.115.241', pdu=~'$pdu'}[30d]) / 10",
+          "interval": "30d",
+          "legendFormat": "{{pdu}}"
+        }
+      ],
+      "timeFrom": "now-12M",
+      "title": "Energy Consumed per Month (kWh)",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          },
+          "decimals": 1,
+          "unit": "amp"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
+      "id": 6,
+      "targets": [
+        {
+          "expr": "apc_phase_current_tenths_amp{instance='10.1.115.241', device_index=~'$__all'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "legendFormat": "{{pdu}} L{{phase_number}}"
+        }
+      ],
+      "title": "Phase Current (A)",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          },
+          "unit": "volt"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "id": 7,
+      "targets": [
+        {
+          "expr": "apc_phase_voltage{instance='10.1.115.241', device_index=~'$__all'} and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "legendFormat": "{{pdu}} L{{phase_number}}"
+        }
+      ],
+      "title": "Phase Voltage (V)",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          },
+          "decimals": 2,
+          "unit": "kwatt"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 30
+      },
+      "id": 8,
+      "targets": [
+        {
+          "expr": "apc_phase_power_hundredths_kw{instance='10.1.115.241', device_index=~'$__all'} / 100 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "legendFormat": "{{pdu}} L{{phase_number}}"
+        }
+      ],
+      "title": "Phase Power",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          },
+          "max": 100,
+          "min": 0,
+          "unit": "percent"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 30
+      },
+      "id": 9,
+      "targets": [
+        {
+          "expr": "apc_phase_power_factor_percent{instance='10.1.115.241', device_index=~'$__all'} and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "legendFormat": "{{pdu}} L{{phase_number}}"
+        }
+      ],
+      "title": "Phase Power Factor (%)",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 10,
+            "lineWidth": 2
+          },
+          "decimals": 1,
+          "unit": "amp"
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "id": 10,
+      "targets": [
+        {
+          "expr": "apc_bank_current_tenths_amp{instance='10.1.115.241', device_index=~'$__all'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "legendFormat": "{{pdu}} Bank {{bank_number}}"
+        }
+      ],
+      "title": "Bank Current (A)",
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 48,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 38
+              },
+              {
+                "color": "red",
+                "value": 48
+              }
+            ]
+          },
+          "unit": "amp"
+        }
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 46
+      },
+      "id": 11,
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal"
+      },
+      "targets": [
+        {
+          "expr": "apc_phase_current_tenths_amp{instance='10.1.115.241', device_index=~'$__all'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "legendFormat": "{{pdu}} L{{phase_number}}"
+        }
+      ],
+      "title": "Current per Phase",
+      "type": "bargauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 1,
+          "max": 20,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 16
+              },
+              {
+                "color": "red",
+                "value": 20
+              }
+            ]
+          },
+          "unit": "amp"
+        }
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 16,
+        "x": 8,
+        "y": 46
+      },
+      "id": 12,
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal"
+      },
+      "targets": [
+        {
+          "expr": "apc_bank_current_tenths_amp{instance='10.1.115.241', device_index=~'$__all'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "legendFormat": "{{pdu}} Bank {{bank_number}}"
+        }
+      ],
+      "title": "Current per Bank",
+      "type": "bargauge"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [
+    "pdu",
+    "power",
+    "snmp"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "includeAll": true,
+        "label": "PDU",
+        "multi": false,
+        "name": "pdu",
+        "query": "label_values(apc_pdu_power_hundredths_kw{instance=\"10.1.115.241\"}, pdu)",
+        "refresh": 2,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timezone": "browser",
+  "title": "APC PDU - Rack Power"
+}
