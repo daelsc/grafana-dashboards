@@ -1,58 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "Prometheus datasource with APC PDU SNMP metrics",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.0.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "gauge",
-      "name": "Gauge",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "row",
-      "name": "Row",
-      "version": ""
-    }
-  ],
   "panels": [
     {
       "collapsed": false,
@@ -82,7 +28,7 @@
       "id": 14,
       "targets": [
         {
-          "expr": "sum(apc_pdu_power_hundredths_kw{instance='10.1.115.241'}) / 100",
+          "expr": "sum(apc_pdu_power_hundredths_kw{instance=~'$instance'}) / 100",
           "legendFormat": "Total"
         }
       ],
@@ -109,7 +55,7 @@
       },
       "targets": [
         {
-          "expr": "sum(apc_pdu_power_max_hundredths_kw{instance='10.1.115.241'}) / 100",
+          "expr": "sum(apc_pdu_power_max_hundredths_kw{instance=~'$instance'}) / 100",
           "legendFormat": "Peak"
         }
       ],
@@ -117,71 +63,16 @@
       "type": "stat"
     },
     {
-      "gridPos": {
-        "h": 6,
-        "w": 16,
-        "x": 8,
-        "y": 1
-      },
-      "id": 15,
-      "options": {
-        "showHeader": true,
-        "cellHeight": "md",
-        "footer": {
-          "show": false
-        }
-      },
-      "targets": [
-        {
-          "expr": "label_replace(sum by (phase_number)(apc_phase_current_tenths_amp{instance='10.1.115.241'}) / 10, \"phase\", \"L$1\", \"phase_number\", \"(.+)\")",
-          "format": "table",
-          "instant": true,
-          "refId": "A"
-        },
-        {
-          "expr": "label_replace(max_over_time((sum by (phase_number)(apc_phase_current_tenths_amp{instance='10.1.115.241'}) / 10)[$__range:1m]), \"phase\", \"L$1\", \"phase_number\", \"(.+)\")",
-          "format": "table",
-          "instant": true,
-          "refId": "B"
-        },
-        {
-          "expr": "label_replace(sum by (phase_number)(apc_phase_current_max_tenths_amp{instance='10.1.115.241'}) / 10, \"phase\", \"L$1\", \"phase_number\", \"(.+)\")",
-          "format": "table",
-          "instant": true,
-          "refId": "C"
-        }
-      ],
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "phase_number": true
-            },
-            "indexByName": {
-              "phase": 0,
-              "Value #A": 1,
-              "Value #B": 2,
-              "Value #C": 3
-            },
-            "renameByName": {
-              "phase": "Phase",
-              "Value #A": "Current (A)",
-              "Value #B": "Range Peak (A)",
-              "Value #C": "HW Peak (A)"
-            }
-          }
-        }
-      ],
       "fieldConfig": {
         "defaults": {
+          "custom": {
+            "cellOptions": {
+              "mode": "gradient",
+              "type": "gauge"
+            },
+            "filterable": false
+          },
           "decimals": 1,
-          "unit": "amp",
           "max": 225,
           "min": 0,
           "thresholds": {
@@ -201,13 +92,7 @@
               }
             ]
           },
-          "custom": {
-            "cellOptions": {
-              "type": "gauge",
-              "mode": "gradient"
-            },
-            "filterable": false
-          }
+          "unit": "amp"
         },
         "overrides": [
           {
@@ -326,7 +211,68 @@
           }
         ]
       },
+      "gridPos": {
+        "h": 6,
+        "w": 16,
+        "x": 8,
+        "y": 1
+      },
+      "id": 15,
+      "options": {
+        "cellHeight": "md",
+        "footer": {
+          "show": false
+        },
+        "showHeader": true
+      },
+      "targets": [
+        {
+          "expr": "label_replace(sum by (phase_number)(apc_phase_current_tenths_amp{instance=~'$instance'}) / 10, \"phase\", \"L$1\", \"phase_number\", \"(.+)\")",
+          "format": "table",
+          "instant": true,
+          "refId": "A"
+        },
+        {
+          "expr": "label_replace(max_over_time((sum by (phase_number)(apc_phase_current_tenths_amp{instance=~'$instance'}) / 10)[$__range:1m]), \"phase\", \"L$1\", \"phase_number\", \"(.+)\")",
+          "format": "table",
+          "instant": true,
+          "refId": "B"
+        },
+        {
+          "expr": "label_replace(sum by (phase_number)(apc_phase_current_max_tenths_amp{instance=~'$instance'}) / 10, \"phase\", \"L$1\", \"phase_number\", \"(.+)\")",
+          "format": "table",
+          "instant": true,
+          "refId": "C"
+        }
+      ],
       "title": "Combined Phase Current (225A limit)",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "phase_number": true
+            },
+            "indexByName": {
+              "Value #A": 1,
+              "Value #B": 2,
+              "Value #C": 3,
+              "phase": 0
+            },
+            "renameByName": {
+              "Value #A": "Current (A)",
+              "Value #B": "Range Peak (A)",
+              "Value #C": "HW Peak (A)",
+              "phase": "Phase"
+            }
+          }
+        }
+      ],
       "type": "table"
     },
     {
@@ -353,7 +299,7 @@
       "id": 16,
       "targets": [
         {
-          "expr": "sum(apc_pdu_power_hundredths_kw{instance='10.1.115.241'}) / 100",
+          "expr": "sum(apc_pdu_power_hundredths_kw{instance=~'$instance'}) / 100",
           "legendFormat": "Total Power"
         }
       ],
@@ -399,7 +345,7 @@
       "id": 17,
       "targets": [
         {
-          "expr": "sum by (phase_number)(apc_phase_current_tenths_amp{instance='10.1.115.241'}) / 10",
+          "expr": "sum by (phase_number)(apc_phase_current_tenths_amp{instance=~'$instance'}) / 10",
           "legendFormat": "L{{phase_number}}"
         }
       ],
@@ -451,7 +397,7 @@
       "id": 1,
       "targets": [
         {
-          "expr": "apc_pdu_power_hundredths_kw{instance='10.1.115.241', pdu=~'$pdu'} / 100",
+          "expr": "apc_pdu_power_hundredths_kw{instance=~'$instance', pdu=~'$pdu'} / 100",
           "legendFormat": "{{pdu}}"
         }
       ],
@@ -483,7 +429,7 @@
       "id": 3,
       "targets": [
         {
-          "expr": "apc_pdu_energy_tenths_kwh{instance='10.1.115.241', pdu=~'$pdu'} / 10",
+          "expr": "apc_pdu_energy_tenths_kwh{instance=~'$instance', pdu=~'$pdu'} / 10",
           "legendFormat": "{{pdu}}"
         }
       ],
@@ -523,7 +469,7 @@
       "id": 4,
       "targets": [
         {
-          "expr": "apc_pdu_power_max_hundredths_kw{instance='10.1.115.241', pdu=~'$pdu'} / 100",
+          "expr": "apc_pdu_power_max_hundredths_kw{instance=~'$instance', pdu=~'$pdu'} / 100",
           "legendFormat": "{{pdu}}"
         }
       ],
@@ -554,7 +500,7 @@
       "id": 5,
       "targets": [
         {
-          "expr": "apc_pdu_power_hundredths_kw{instance='10.1.115.241', pdu=~'$pdu'} / 100",
+          "expr": "apc_pdu_power_hundredths_kw{instance=~'$instance', pdu=~'$pdu'} / 100",
           "legendFormat": "{{pdu}}"
         }
       ],
@@ -589,7 +535,7 @@
       "id": 13,
       "targets": [
         {
-          "expr": "delta(apc_pdu_energy_tenths_kwh{instance='10.1.115.241', pdu=~'$pdu'}[30d]) / 10",
+          "expr": "delta(apc_pdu_energy_tenths_kwh{instance=~'$instance', pdu=~'$pdu'}[30d]) / 10",
           "interval": "30d",
           "legendFormat": "{{pdu}}"
         }
@@ -621,7 +567,7 @@
       "id": 6,
       "targets": [
         {
-          "expr": "apc_phase_current_tenths_amp{instance='10.1.115.241'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "expr": "apc_phase_current_tenths_amp{instance=~'$instance'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
           "legendFormat": "{{pdu}} L{{phase_number}}"
         }
       ],
@@ -650,7 +596,7 @@
       "id": 7,
       "targets": [
         {
-          "expr": "apc_phase_voltage{instance='10.1.115.241'} and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "expr": "apc_phase_voltage{instance=~'$instance'} and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
           "legendFormat": "{{pdu}} L{{phase_number}}"
         }
       ],
@@ -680,7 +626,7 @@
       "id": 8,
       "targets": [
         {
-          "expr": "apc_phase_power_hundredths_kw{instance='10.1.115.241'} / 100 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "expr": "apc_phase_power_hundredths_kw{instance=~'$instance'} / 100 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
           "legendFormat": "{{pdu}} L{{phase_number}}"
         }
       ],
@@ -711,7 +657,7 @@
       "id": 9,
       "targets": [
         {
-          "expr": "apc_phase_power_factor_percent{instance='10.1.115.241'} and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "expr": "apc_phase_power_factor_percent{instance=~'$instance'} and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
           "legendFormat": "{{pdu}} L{{phase_number}}"
         }
       ],
@@ -741,7 +687,7 @@
       "id": 10,
       "targets": [
         {
-          "expr": "apc_bank_current_tenths_amp{instance='10.1.115.241'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "expr": "apc_bank_current_tenths_amp{instance=~'$instance'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
           "legendFormat": "{{pdu}} Bank {{bank_number}}"
         }
       ],
@@ -786,7 +732,7 @@
       },
       "targets": [
         {
-          "expr": "apc_phase_current_tenths_amp{instance='10.1.115.241'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "expr": "apc_phase_current_tenths_amp{instance=~'$instance'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
           "legendFormat": "{{pdu}} L{{phase_number}}"
         }
       ],
@@ -831,7 +777,7 @@
       },
       "targets": [
         {
-          "expr": "apc_bank_current_tenths_amp{instance='10.1.115.241'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
+          "expr": "apc_bank_current_tenths_amp{instance=~'$instance'} / 10 and on(device_index) apc_pdu_power_hundredths_kw{pdu=~'$pdu'}",
           "legendFormat": "{{pdu}} Bank {{bank_number}}"
         }
       ],
@@ -844,17 +790,20 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 70
+        "y": 68
       },
       "id": 23,
-      "title": "NMC1 PDU (10.7.115.211 - AP7911A)",
+      "title": "NMC1 PDU (AP7911A - 10.7.115.211)",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dea64579-d635-4502-99d6-3cc747a8b2bb"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
-          "unit": "watt",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -871,30 +820,37 @@
                 "value": 5000
               }
             ]
-          }
+          },
+          "unit": "watt"
         }
       },
       "gridPos": {
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 71
+        "y": 69
       },
       "id": 24,
       "targets": [
         {
-          "expr": "apc_rpdu_power_watts{instance=\"10.7.115.211\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dea64579-d635-4502-99d6-3cc747a8b2bb"
+          },
+          "expr": "apc_rpdu_power_watts{instance='10.7.115.211'}",
           "legendFormat": "Total Power"
         }
       ],
-      "title": "NMC1 - Total Power (W)",
+      "title": "NMC1 - Current Power",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dea64579-d635-4502-99d6-3cc747a8b2bb"
+      },
       "fieldConfig": {
         "defaults": {
-          "decimals": 2,
-          "unit": "kwatt",
           "color": {
             "mode": "palette-classic"
           },
@@ -902,23 +858,29 @@
             "fillOpacity": 15,
             "gradientMode": "scheme",
             "lineWidth": 2
-          }
+          },
+          "decimals": 2,
+          "unit": "kwatt"
         }
       },
       "gridPos": {
         "h": 8,
         "w": 18,
         "x": 6,
-        "y": 71
+        "y": 69
       },
       "id": 25,
       "targets": [
         {
-          "expr": "apc_rpdu_power_watts{instance=\"10.7.115.211\"} / 1000",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dea64579-d635-4502-99d6-3cc747a8b2bb"
+          },
+          "expr": "apc_rpdu_power_watts{instance='10.7.115.211'} / 1000",
           "legendFormat": "AP7911A (10.7.115.211)"
         }
       ],
-      "title": "NMC1 - Power Over Time (kW)",
+      "title": "NMC1 - Power Over Time",
       "type": "timeseries"
     }
   ],
@@ -938,13 +900,30 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "dea64579-d635-4502-99d6-3cc747a8b2bb"
+        },
+        "includeAll": true,
+        "label": "Instance",
+        "multi": true,
+        "name": "instance",
+        "query": "label_values(apc_pdu_power_hundredths_kw{job=\"snmp-apc\"}, instance)",
+        "refresh": 2,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "dea64579-d635-4502-99d6-3cc747a8b2bb"
         },
         "includeAll": true,
         "label": "PDU",
         "multi": false,
         "name": "pdu",
-        "query": "label_values(apc_pdu_power_hundredths_kw{instance=\"10.1.115.241\"}, pdu)",
+        "query": "label_values(apc_pdu_power_hundredths_kw{instance=~\"$instance\"}, pdu)",
         "refresh": 2,
         "type": "query"
       }
@@ -955,5 +934,6 @@
     "to": "now"
   },
   "timezone": "browser",
-  "title": "APC PDU - Rack Power"
+  "title": "APC PDU - Rack Power",
+  "uid": "apc-pdu-rack-power"
 }
