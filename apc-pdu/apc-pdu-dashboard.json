@@ -56,7 +56,12 @@
   "panels": [
     {
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "id": 20,
       "title": "Combined Totals",
       "type": "row"
@@ -68,7 +73,12 @@
           "unit": "kwatt"
         }
       },
-      "gridPos": { "h": 6, "w": 4, "x": 0, "y": 1 },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
       "id": 14,
       "targets": [
         {
@@ -86,7 +96,12 @@
           "unit": "kwatt"
         }
       },
-      "gridPos": { "h": 6, "w": 4, "x": 4, "y": 1 },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 1
+      },
       "id": 22,
       "options": {
         "colorMode": "value",
@@ -102,12 +117,19 @@
       "type": "stat"
     },
     {
-      "gridPos": { "h": 6, "w": 16, "x": 8, "y": 1 },
+      "gridPos": {
+        "h": 6,
+        "w": 16,
+        "x": 8,
+        "y": 1
+      },
       "id": 15,
       "options": {
         "showHeader": true,
         "cellHeight": "md",
-        "footer": { "show": false }
+        "footer": {
+          "show": false
+        }
       },
       "targets": [
         {
@@ -137,7 +159,10 @@
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true, "phase_number": true },
+            "excludeByName": {
+              "Time": true,
+              "phase_number": true
+            },
             "indexByName": {
               "phase": 0,
               "Value #A": 1,
@@ -162,9 +187,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 180 },
-              { "color": "red", "value": 210 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 180
+              },
+              {
+                "color": "red",
+                "value": 210
+              }
             ]
           },
           "custom": {
@@ -177,44 +211,117 @@
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "Phase" },
+            "matcher": {
+              "id": "byName",
+              "options": "Phase"
+            },
             "properties": [
-              { "id": "custom.cellOptions", "value": { "type": "auto" } },
-              { "id": "custom.width", "value": 60 }
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 60
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "Range Peak (A)" },
+            "matcher": {
+              "id": "byName",
+              "options": "Range Peak (A)"
+            },
             "properties": [
-              { "id": "custom.cellOptions", "value": { "type": "color-text" } },
-              { "id": "custom.width", "value": 100 },
-              { "id": "color", "value": { "mode": "thresholds" } },
-              { "id": "thresholds", "value": {
-                "mode": "absolute",
-                "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "yellow", "value": 150 },
-                  { "color": "orange", "value": 180 },
-                  { "color": "red", "value": 210 }
-                ]
-              }}
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "thresholds"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 150
+                    },
+                    {
+                      "color": "orange",
+                      "value": 180
+                    },
+                    {
+                      "color": "red",
+                      "value": 210
+                    }
+                  ]
+                }
+              }
             ]
           },
           {
-            "matcher": { "id": "byName", "options": "HW Peak (A)" },
+            "matcher": {
+              "id": "byName",
+              "options": "HW Peak (A)"
+            },
             "properties": [
-              { "id": "custom.cellOptions", "value": { "type": "color-text" } },
-              { "id": "custom.width", "value": 100 },
-              { "id": "color", "value": { "mode": "thresholds" } },
-              { "id": "thresholds", "value": {
-                "mode": "absolute",
-                "steps": [
-                  { "color": "green", "value": null },
-                  { "color": "yellow", "value": 150 },
-                  { "color": "orange", "value": 180 },
-                  { "color": "red", "value": 210 }
-                ]
-              }}
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 100
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "thresholds"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 150
+                    },
+                    {
+                      "color": "orange",
+                      "value": 180
+                    },
+                    {
+                      "color": "red",
+                      "value": 210
+                    }
+                  ]
+                }
+              }
             ]
           }
         ]
@@ -225,7 +332,9 @@
     {
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 15,
             "gradientMode": "scheme",
@@ -235,7 +344,12 @@
           "unit": "kwatt"
         }
       },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 7 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
       "id": 16,
       "targets": [
         {
@@ -249,24 +363,39 @@
     {
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 10,
             "lineWidth": 2,
-            "thresholdsStyle": { "mode": "line" }
+            "thresholdsStyle": {
+              "mode": "line"
+            }
           },
           "decimals": 1,
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "red", "value": 225 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 225
+              }
             ]
           },
           "unit": "amp"
         }
       },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 7 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
       "id": 17,
       "targets": [
         {
@@ -279,7 +408,12 @@
     },
     {
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 15 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
       "id": 21,
       "title": "Per-PDU Details",
       "type": "row"
@@ -291,15 +425,29 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 13.8 },
-              { "color": "red", "value": 17.3 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 13.8
+              },
+              {
+                "color": "red",
+                "value": 17.3
+              }
             ]
           },
           "unit": "kwatt"
         }
       },
-      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 16 },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 16
+      },
       "id": 1,
       "targets": [
         {
@@ -317,13 +465,21 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null }
+              {
+                "color": "green",
+                "value": null
+              }
             ]
           },
           "unit": "kwatth"
         }
       },
-      "gridPos": { "h": 6, "w": 8, "x": 8, "y": 16 },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 16
+      },
       "id": 3,
       "targets": [
         {
@@ -341,15 +497,29 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 13.8 },
-              { "color": "red", "value": 17.3 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 13.8
+              },
+              {
+                "color": "red",
+                "value": 17.3
+              }
             ]
           },
           "unit": "kwatt"
         }
       },
-      "gridPos": { "h": 6, "w": 8, "x": 16, "y": 16 },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 16
+      },
       "id": 4,
       "targets": [
         {
@@ -363,7 +533,9 @@
     {
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 15,
             "gradientMode": "scheme",
@@ -373,7 +545,12 @@
           "unit": "kwatt"
         }
       },
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 22 },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
       "id": 5,
       "targets": [
         {
@@ -403,7 +580,12 @@
           "unit": "kwatth"
         }
       },
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 30 },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
       "id": 13,
       "targets": [
         {
@@ -419,7 +601,9 @@
     {
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 10,
             "lineWidth": 2
@@ -428,7 +612,12 @@
           "unit": "amp"
         }
       },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 38 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 38
+      },
       "id": 6,
       "targets": [
         {
@@ -442,7 +631,9 @@
     {
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 10,
             "lineWidth": 2
@@ -450,7 +641,12 @@
           "unit": "volt"
         }
       },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 38 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 38
+      },
       "id": 7,
       "targets": [
         {
@@ -464,7 +660,9 @@
     {
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 10,
             "lineWidth": 2
@@ -473,7 +671,12 @@
           "unit": "kwatt"
         }
       },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 46 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 46
+      },
       "id": 8,
       "targets": [
         {
@@ -487,7 +690,9 @@
     {
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 10,
             "lineWidth": 2
@@ -497,7 +702,12 @@
           "unit": "percent"
         }
       },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 46 },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 46
+      },
       "id": 9,
       "targets": [
         {
@@ -511,7 +721,9 @@
     {
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "fillOpacity": 10,
             "lineWidth": 2
@@ -520,7 +732,12 @@
           "unit": "amp"
         }
       },
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 54 },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 54
+      },
       "id": 10,
       "targets": [
         {
@@ -539,15 +756,29 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 38 },
-              { "color": "red", "value": 48 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 38
+              },
+              {
+                "color": "red",
+                "value": 48
+              }
             ]
           },
           "unit": "amp"
         }
       },
-      "gridPos": { "h": 6, "w": 8, "x": 0, "y": 62 },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 62
+      },
       "id": 11,
       "options": {
         "displayMode": "gradient",
@@ -570,15 +801,29 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "yellow", "value": 16 },
-              { "color": "red", "value": 20 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 16
+              },
+              {
+                "color": "red",
+                "value": 20
+              }
             ]
           },
           "unit": "amp"
         }
       },
-      "gridPos": { "h": 6, "w": 16, "x": 8, "y": 62 },
+      "gridPos": {
+        "h": 6,
+        "w": 16,
+        "x": 8,
+        "y": 62
+      },
       "id": 12,
       "options": {
         "displayMode": "gradient",
@@ -592,6 +837,89 @@
       ],
       "title": "Current per Bank",
       "type": "bargauge"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 70
+      },
+      "id": 23,
+      "title": "NMC1 PDU (10.7.115.211 - AP7911A)",
+      "type": "row"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "unit": "watt",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 4000
+              },
+              {
+                "color": "red",
+                "value": 5000
+              }
+            ]
+          }
+        }
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 71
+      },
+      "id": 24,
+      "targets": [
+        {
+          "expr": "apc_rpdu_power_watts{instance=\"10.7.115.211\"}",
+          "legendFormat": "Total Power"
+        }
+      ],
+      "title": "NMC1 - Total Power (W)",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "unit": "kwatt",
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "fillOpacity": 15,
+            "gradientMode": "scheme",
+            "lineWidth": 2
+          }
+        }
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 18,
+        "x": 6,
+        "y": 71
+      },
+      "id": 25,
+      "targets": [
+        {
+          "expr": "apc_rpdu_power_watts{instance=\"10.7.115.211\"} / 1000",
+          "legendFormat": "AP7911A (10.7.115.211)"
+        }
+      ],
+      "title": "NMC1 - Power Over Time (kW)",
+      "type": "timeseries"
     }
   ],
   "refresh": "30s",
